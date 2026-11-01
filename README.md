@@ -1,43 +1,23 @@
-# STEENIE BROWSER
+# STEENIE BROWSER 2.0
 
-A lightweight Android browser starter project with a midnight black / electric blue / violet UI.
+A lightweight Android browser with a midnight blue/violet identity and a Brave-inspired browser layout. It uses Android System WebView (Chromium-based), not a separately bundled Chromium engine.
 
-## Engine note
-This first build uses Android System WebView, which is Chromium-based and supplied/updated by the Android device's WebView provider (often Android System WebView or Chrome). It does **not** bundle the full standalone Chromium engine. Building and maintaining a custom Chromium engine is far beyond a practical ARMv7 Termux build.
+## Features
+- Brave-inspired dark top bar, address/search field, shields control, tab counter and bottom navigation.
+- Multiple tabs and a tab switcher.
+- Private tabs with local-history suppression, no-cache mode and cookies disabled while a private tab is active.
+- Gmail shortcut that opens Gmail in a browser tab; Google sign-in is handled by Google, and the app does not store passwords.
+- Start page with shortcuts for Google, Gmail, YouTube, GitHub, Wikipedia, Facebook, Instagram and Reddit.
+- Four built-in start-page background themes.
+- Bookmarks, browsing history, downloads and desktop-site mode.
+- Small built-in tracker-domain blocklist.
 
-## Features in this starter
-- URL bar with web search fallback (Google)
-- Back, forward, home, refresh via page reload behavior
-- Multiple tabs and tab switcher
-- Bookmarks and basic browsing history
-- DownloadManager downloads
-- Basic private-tab mode (local history is not saved while active)
-- Small built-in tracker-domain blocklist (not a complete ad blocker)
-- Desktop-mode toggle for newly created tabs
-- Custom STEENIE icon and dark visual theme
+## Build
+GitHub Actions builds the debug APK on every push to `main`, or manually through Actions → Build STEENIE BROWSER APK → Run workflow. Download the `STEENIE-BROWSER-2.0-debug-apk` artifact from the completed run.
 
-## Build APK using GitHub Actions (recommended for Android 11 ARMv7 phone)
-1. Create a GitHub repository named `steenie-browser`.
-2. Upload/push all files in this project to the repository's `main` branch.
-3. Open the repository on GitHub → **Actions** → **Build STEENIE BROWSER APK** → **Run workflow**.
-4. Wait for the workflow to finish successfully.
-5. Open the completed workflow run → **Artifacts** → download `STEENIE-BROWSER-debug-apk`.
-6. Extract the ZIP on your phone and install `app-debug.apk`. If Android asks, allow installation from that file manager/browser.
-
-## Build locally (Android Studio / Linux)
-Requires JDK 17, Android SDK platform 35, Build Tools 35.0.0, and Gradle 8.9+.
-
-```bash
-gradle assembleDebug
-```
-
-APK output: `app/build/outputs/apk/debug/app-debug.apk`.
-
-## Termux note
-The source can be edited in Termux, but a full Android SDK/Gradle build is not recommended on a 1.8 GB ARMv7 phone. Use GitHub Actions as the remote build machine and download the APK to the phone.
-
-## Important limitations
-- Private mode is a basic local-history feature, not anonymity. Websites, networks, DNS providers, and internet providers may still observe activity.
-- Tracker blocking uses a small hostname list and is not equivalent to Brave Shields or uBlock Origin.
-- WebView capabilities and updates depend on the Android System WebView provider installed on the device.
-- No extension ecosystem, sync, password manager, or full Chromium engine is included yet.
+## Limitations and privacy notes
+- This is a Brave-inspired interface, not a copy of Brave's proprietary branding or source code.
+- Android System WebView supplies the Chromium-based rendering engine. A full custom Chromium build is not practical on a low-memory ARMv7 phone.
+- Private tabs reduce local traces but are not anonymous. Websites, network operators, DNS providers and internet providers may still observe activity. WebView cookie handling is process-wide on this Android API range, so cookies are disabled while a private tab is selected and re-enabled when a regular tab is selected; this is not a fully isolated multi-profile architecture.
+- Tracker blocking is a small domain list, not Brave Shields or a complete ad blocker.
+- Gmail is opened as a website shortcut. Google may restrict sign-in in embedded WebViews; if that happens, use the device's supported Chrome/browser sign-in flow.
